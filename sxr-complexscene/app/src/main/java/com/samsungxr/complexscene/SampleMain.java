@@ -22,6 +22,7 @@ import com.samsungxr.SXRMain;
 import com.samsungxr.SXRMaterial;
 import com.samsungxr.SXRMesh;
 import com.samsungxr.SXRRenderData;
+import com.samsungxr.SXRRenderPass;
 import com.samsungxr.SXRScene;
 import com.samsungxr.SXRNode;
 
@@ -55,8 +56,23 @@ public class SampleMain extends SXRMain {
         cursor.getRenderData()
                 .setRenderingOrder(SXRRenderData.SXRRenderingOrder.OVERLAY)
                 .setDepthTest(false)
-                .setRenderingOrder(CURSOR_RENDER_ORDER).setLayer(SXRRenderData.LayerType.HeadLocked);
-        sxrContext.getMainScene().getMainCameraRig().addChildObject(cursor);
+                .setRenderingOrder(CURSOR_RENDER_ORDER)
+                .setLayer(SXRRenderData.LayerType.Cursor);
+        scene.getMainCameraRig().addChildObject(cursor);
+
+        SXRNode video = new SXRNode(sxrContext,
+                1.f, 1.f,
+                sxrContext.getAssetLoader().loadTexture(new SXRAndroidResource(sxrContext, R.drawable.samsung_xr_512x512)));
+        video.getTransform().setPositionZ(-1.f);
+        //video.getTransform().setRotationByAxis(90.f, 0.f, 1.f, 0.f);
+        video.setName("video");
+        video.getRenderData()
+                .setRenderingOrder(SXRRenderData.SXRRenderingOrder.OVERLAY)
+                .setDepthTest(false)
+                .setRenderingOrder(50000)
+                .setLayer(SXRRenderData.LayerType.Video)
+                .setCullFace(SXRRenderPass.SXRCullFaceEnum.None);
+        scene.getMainCameraRig().addChildObject(video);
 
         try {
             EnumSet<SXRImportSettings> settings = SXRImportSettings.getRecommendedSettingsWith(EnumSet.of(NO_LIGHTING));
