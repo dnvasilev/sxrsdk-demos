@@ -21,6 +21,7 @@ import com.samsungxr.SXRImportSettings;
 import com.samsungxr.SXRMain;
 import com.samsungxr.SXRMaterial;
 import com.samsungxr.SXRMesh;
+import com.samsungxr.SXRPerspectiveCamera;
 import com.samsungxr.SXRRenderData;
 import com.samsungxr.SXRRenderPass;
 import com.samsungxr.SXRScene;
@@ -60,8 +61,11 @@ public class SampleMain extends SXRMain {
                 .setLayer(SXRRenderData.LayerType.Cursor);
         scene.getMainCameraRig().addChildObject(cursor);
 
+        float fov = scene.getMainCameraRig().getCenterCamera().getFovY()*(float)Math.PI/180.f;
+        float planesize = 2.f*(float)Math.tan(fov/2.f);
+
         SXRNode video = new SXRNode(sxrContext,
-                1.f, 1.f,
+                planesize, planesize,
                 sxrContext.getAssetLoader().loadTexture(new SXRAndroidResource(sxrContext, R.drawable.samsung_xr_512x512)));
         video.getTransform().setPositionZ(-1.f);
         //video.getTransform().setRotationByAxis(90.f, 0.f, 1.f, 0.f);
