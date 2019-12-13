@@ -65,9 +65,9 @@ public class SampleMain extends SXRMain {
         float planesize = 2.f*(float)Math.tan(fov/2.f);
 
         SXRNode video = new SXRNode(sxrContext,
-                planesize, planesize,
+                1000*planesize, 1000*planesize,
                 sxrContext.getAssetLoader().loadTexture(new SXRAndroidResource(sxrContext, R.drawable.samsung_xr_512x512)));
-        video.getTransform().setPositionZ(-1.f);
+        video.getTransform().setPositionZ(-1000.f);
         //video.getTransform().setRotationByAxis(90.f, 0.f, 1.f, 0.f);
         video.setName("video");
         video.getRenderData()
