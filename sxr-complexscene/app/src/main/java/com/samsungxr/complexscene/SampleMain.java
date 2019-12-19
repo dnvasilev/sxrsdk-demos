@@ -26,6 +26,9 @@ import com.samsungxr.SXRRenderData;
 import com.samsungxr.SXRRenderPass;
 import com.samsungxr.SXRScene;
 import com.samsungxr.SXRNode;
+import com.samsungxr.SXRTexture;
+import com.samsungxr.SxrViewManager;
+import com.samsungxr.utility.Log;
 
 import java.io.IOException;
 import java.util.EnumSet;
@@ -33,6 +36,7 @@ import java.util.EnumSet;
 import static com.samsungxr.SXRImportSettings.NO_LIGHTING;
 
 public class SampleMain extends SXRMain {
+
     @Override
     public SplashMode getSplashMode() {
         return SplashMode.NONE;
@@ -41,6 +45,7 @@ public class SampleMain extends SXRMain {
     @Override
     public void onInit(SXRContext sxrContext) throws IOException {
         // set background color
+        SXRTexture videoTexture = sxrContext.getAssetLoader().loadTexture(new SXRAndroidResource(sxrContext, R.drawable.samsung_xr_512x512));
         SXRScene scene = sxrContext.getMainScene();
         scene.setBackgroundColor(1, 1, 1, 1);
         scene.setFrustumCulling(false);
@@ -64,6 +69,12 @@ public class SampleMain extends SXRMain {
         float fov = scene.getMainCameraRig().getCenterCamera().getFovY()*(float)Math.PI/180.f;
         float planesize = 2.f*(float)Math.tan(fov/2.f);
 
+        //try {
+        //    Thread.sleep(5000);
+        //} catch (InterruptedException e){
+
+        //}
+        if(false) {
         SXRNode video = new SXRNode(sxrContext,
                 1000*planesize, 1000*planesize,
                 sxrContext.getAssetLoader().loadTexture(new SXRAndroidResource(sxrContext, R.drawable.samsung_xr_512x512)));
@@ -77,6 +88,20 @@ public class SampleMain extends SXRMain {
                 .setLayer(SXRRenderData.LayerType.Video)
                 .setCullFace(SXRRenderPass.SXRCullFaceEnum.None);
         scene.getMainCameraRig().addChildObject(video);
+        } else {
+            int id = videoTexture.getId();
+            while ( id == 0) {
+                Log.e("sxr-complexscene","texid = %d", id);
+                try {
+                    Thread.sleep(50);
+                } catch (Exception c) {
+                }
+                id = videoTexture.getId();
+            }
+            Log.e("sxr-complexscene","texid = %d", id);
+
+            ((SxrViewManager)sxrContext).setVideoTextureId(id);
+        }
 
         try {
             EnumSet<SXRImportSettings> settings = SXRImportSettings.getRecommendedSettingsWith(EnumSet.of(NO_LIGHTING));
