@@ -69,11 +69,6 @@ public class SampleMain extends SXRMain {
         float fov = scene.getMainCameraRig().getCenterCamera().getFovY()*(float)Math.PI/180.f;
         float planesize = 2.f*(float)Math.tan(fov/2.f);
 
-        //try {
-        //    Thread.sleep(5000);
-        //} catch (InterruptedException e){
-
-        //}
         if(false) {
         SXRNode video = new SXRNode(sxrContext,
                 1000*planesize, 1000*planesize,
@@ -94,7 +89,7 @@ public class SampleMain extends SXRMain {
                 Log.e("sxr-complexscene","texid = %d", id);
                 try {
                     Thread.sleep(50);
-                } catch (Exception c) {
+                } catch (InterruptedException c) {
                 }
                 id = videoTexture.getId();
             }
