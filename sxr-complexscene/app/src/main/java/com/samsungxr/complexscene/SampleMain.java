@@ -66,11 +66,16 @@ public class SampleMain extends SXRMain {
                 .setLayer(SXRRenderData.LayerType.Cursor);
         scene.getMainCameraRig().addChildObject(cursor);
 
-        float fov = scene.getMainCameraRig().getCenterCamera().getFovY()*(float)Math.PI/180.f;
-        float planesize = 2.f*(float)Math.tan(fov/2.f);
+        SXRNode logo = new SXRNode(sxrContext, 1, 1, videoTexture);
+        logo.getTransform().setPosition(2,0,-5);
+        logo.setName("logo");
+        scene.addNode(logo);
+
 
         if(false) {
-        SXRNode video = new SXRNode(sxrContext,
+            float fov = scene.getMainCameraRig().getCenterCamera().getFovY()*(float)Math.PI/180.f;
+            float planesize = 2.f*(float)Math.tan(fov/2.f);
+            SXRNode video = new SXRNode(sxrContext,
                 1000*planesize, 1000*planesize,
                 sxrContext.getAssetLoader().loadTexture(new SXRAndroidResource(sxrContext, R.drawable.samsung_xr_512x512)));
         video.getTransform().setPositionZ(-1000.f);
