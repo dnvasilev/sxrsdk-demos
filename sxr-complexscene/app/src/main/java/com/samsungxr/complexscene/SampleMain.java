@@ -67,7 +67,7 @@ public class SampleMain extends SXRMain {
         scene.getMainCameraRig().addChildObject(cursor);
 
         SXRNode logo = new SXRNode(sxrContext, 1, 1, videoTexture);
-        logo.getTransform().setPosition(2,0,-5);
+        logo.getTransform().setPosition(0,0,-5);
         logo.setName("logo");
         scene.addNode(logo);
 
